@@ -47,13 +47,14 @@
 
 function init() {
   const grid = document.querySelector(".grid");
-
-  const width = 10;
+  const start = document.getElementById("start");
+  const reset = document.getElementById("reset");
+  const width = 13;
   const totalCellCount = width * width;
   const cells = [];
 
   function createGrid() {
-    for (let i = 0; i < totalCellCount; i++) {
+    for (let i = 0; i < totalCellCount - 1; i++) {
       const cell = document.createElement("div");
       cell.innerText = i;
       grid.appendChild(cell);

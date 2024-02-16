@@ -9,6 +9,7 @@
 body{
     margin: 0;
     height: 100vh;
+    font-family: 'Star Wars', sans-serif;
 }
 
 /* Header Container & display----------------------  */
@@ -18,7 +19,7 @@ body{
     flex-direction: column;
     align-items: center;
     border: 1px black solid;
-    max-width: 700px;
+    max-width: 800px;
     margin: 0 auto;
 }
 
@@ -34,6 +35,19 @@ body{
     flex-direction: column
     ;
 }
+
+/* Image for the life's */
+.life{
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-image: url(../assets/luke.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+/* Style for buttons----------------------*/
 
 /* Cell grid-----------------------------------  */
 .grid-wrapper {
@@ -51,14 +65,14 @@ body{
     height: 100%;
     justify-content: center;
     height: 600px;
-    width: 600px;
+    width: 800px;
 }
 
 .grid div {
     border: 1px solid lightgrey;
     flex-grow: 1;
-    height: 10%;
-    width: 10%;
+    height: calc(100%/12);
+    width: calc(100%/14);
 }
 
 /* Define the grid box and give it style
