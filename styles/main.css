@@ -11,7 +11,7 @@ body{
     height: 100vh;
 }
 
-/* Header Container & displ----------------------  */
+/* Header Container & display----------------------  */
 /* make a flex box, centre it, add background image */
 .head-box{
     display: flex;
@@ -27,6 +27,12 @@ body{
     display: flex;
     justify-content: space-around;
     width: 100%;
+}
+
+.instructions{
+    display: flex;
+    flex-direction: column
+    ;
 }
 
 /* Cell grid-----------------------------------  */
@@ -62,4 +68,5 @@ body{
 /* animation for lazer moving up
 /* create class for bomb 
 /* animation for bomb going down*/
+/* when screen gets small, remove instructions */
 
