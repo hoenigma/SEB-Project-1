@@ -46,21 +46,73 @@
 //for both scenarios, store the players score
 
 function init() {
+  //Grabing elements from DOM and setting up Variables
   const grid = document.querySelector(".grid");
   const start = document.getElementById("start");
   const reset = document.getElementById("reset");
+  const lives = document.querySelectorAll(".life");
   const width = 13;
   const totalCellCount = width * width;
   const cells = [];
+  let playerCurrentPostion = 162;
 
+  //setting up postion for enemy
+  let enemies = [];
+  //let enemyStart = 57;
+  let enemiesCurrentPosition = [
+    16, 17, 18, 19, 20, 21, 22, 29, 30, 31, 32, 33, 34, 35, 42, 43, 44, 45, 46,
+    47, 48, 55, 56, 57, 58, 59, 60, 61,
+  ];
+  enemiesCurrentPosition.forEach((element, i) => {
+    enemies[i] = { position: enemiesCurrentPosition[i], ind: i };
+  });
+
+  //creating a grid
   function createGrid() {
-    for (let i = 0; i < totalCellCount - 1; i++) {
+    for (let i = 0; i < totalCellCount; i++) {
       const cell = document.createElement("div");
       cell.innerText = i;
       grid.appendChild(cell);
       cells.push(cell);
     }
+    addPlayer(playerCurrentPostion);
+    addEnemies();
   }
   createGrid();
+
+  //functions for adding, removing and moving the player
+  function addPlayer(position) {
+    cells[position].classList.add("player");
+  }
+  function removePlayer(position) {
+    cells[position].classList.remove("player");
+  }
+  function handleKeyPress(event) {
+    removePlayer(playerCurrentPostion);
+    //move left (keyCode = 37)
+    if (event.keyCode === 37 && playerCurrentPostion % width !== 0) {
+      playerCurrentPostion--;
+      // move right (keyCode = 39)
+    } else if (
+      event.keyCode === 39 &&
+      playerCurrentPostion % width !== width - 1
+    ) {
+      playerCurrentPostion++;
+    }
+    addPlayer(playerCurrentPostion);
+  }
+  document.addEventListener("keydown", handleKeyPress);
+
+  //functions for adding and removing the enemies
+
+  function addEnemies() {
+    // place enemies on grid
+    enemies.forEach((element) => {
+      cells[element.position].classList.add("enemy");
+    });
+  }
+  function removeEnemies(position) {
+    cells[position].classList.remove("enemy");
+  }
 }
 window.addEventListener("DOMContentLoaded", init);

@@ -10,6 +10,7 @@ body {
   margin: 0;
   height: 100vh;
   font-family: "Star Wars", sans-serif;
+  color: #feda4a;;
   background-image: url(../assets/Death-Star.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -75,8 +76,8 @@ body {
 .grid div {
   border: 1px solid lightgrey;
   flex-grow: 1;
-  height: calc(100% / 12);
-  width: calc(100% / 14);
+  height: calc(100% / 13);
+  width: calc(100% / 13);
 }
 
 /* Define the grid box and give it style
@@ -93,10 +94,12 @@ body {
 .grid div.enemy {
     background-image: url("../assets/tiefighter.png");
     background-repeat: no-repeat;
-    background-size: contain;
+    background-position: center;
+    background-size: contain; 
 }
 
-.grid div.player-lazer{
+/* Create class for laser */
+.grid div.player-laser{
     background-image: url("../assets/player-lazer.jpg");
     background-repeat: no-repeat;
     background-size: contain;
@@ -104,7 +107,8 @@ body {
 
 }
 
-.grid div.enemy-lazer {
+/* create class for bomb */
+.grid div.enemy-bomb {
     background-image: url("../assets/enemy-lazer.jpg");
     background-repeat: no-repeat;
     background-size: contain;
@@ -112,8 +116,7 @@ body {
 }
 
 
-/* Create class for lazer
-/* animation for lazer moving up
-/* create class for bomb 
+
+/* animation for laser moving up
 /* animation for bomb going down*/
-/* when screen gets small, remove instructions */
+
