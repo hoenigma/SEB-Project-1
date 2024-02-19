@@ -55,6 +55,7 @@ function init() {
   const totalCellCount = width * width;
   const cells = [];
   let playerCurrentPostion = 162;
+  isGamePlaying = false;
 
   //setting up postion for enemy
   let enemies = [];
@@ -63,9 +64,12 @@ function init() {
     16, 17, 18, 19, 20, 21, 22, 29, 30, 31, 32, 33, 34, 35, 42, 43, 44, 45, 46,
     47, 48, 55, 56, 57, 58, 59, 60, 61,
   ];
+  //put for every position an enemy as an object in array, with position and index as keys
   enemiesCurrentPosition.forEach((element, i) => {
     enemies[i] = { position: enemiesCurrentPosition[i], ind: i };
   });
+
+  let enemiesMove = "left"; //start the enemies moving left
 
   //creating a grid
   function createGrid() {
@@ -104,15 +108,53 @@ function init() {
   document.addEventListener("keydown", handleKeyPress);
 
   //functions for adding and removing the enemies
-
   function addEnemies() {
-    // place enemies on grid
     enemies.forEach((element) => {
       cells[element.position].classList.add("enemy");
     });
   }
-  function removeEnemies(position) {
-    cells[position].classList.remove("enemy");
+  function removeEnemies() {
+    enemies.forEach((element) => {
+      cells[element.position].classList.remove("enemy");
+    });
   }
+
+  //function for moving enemy
+  function moveEnemies() {
+    setInterval(() => {
+      //remove class
+      removeEnemies(enemiesCurrentPosition);
+
+      // if (enemyDir === "touchright" || enemyDir === "touchleft") {
+      //   item["position"] = item["position"] + width;}
+
+      enemies.forEach((element) => {
+        if (enemiesMove === "left") {
+          element["position"] = element["position"] - 1;
+        } else if (enemiesMove === "right") {
+          element["position"] = element["position"] + 1;
+        }
+      });
+      //add class
+      addEnemies(enemiesCurrentPosition);
+
+      if (enemies.filter((enemies) => enemies.position % width === 0)) {
+        enemies["position"] = enemies["position"] + width;
+        enemiesMove = "right";
+      } else if (
+        enemies.filter((enemies) => enemies.position % width !== width - 1)
+      ) {
+        enemies["position"] = enemies["position"] + width;
+        enemiesMove = "left";
+      }
+
+      //is enemy at the end? use .filter to say any enemy that does this
+      //for the left
+    }, 2000);
+  }
+
+  start.addEventListener("click", moveEnemies);
+
+  //function to move enemies
 }
 window.addEventListener("DOMContentLoaded", init);
