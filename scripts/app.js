@@ -70,6 +70,7 @@ function init() {
   });
 
   let enemiesMove = "left"; //start the enemies moving left
+  let moveDown = 0;
 
   //creating a grid
   function createGrid() {
@@ -125,11 +126,10 @@ function init() {
       //remove class
       removeEnemies(enemiesCurrentPosition);
 
-      // if (enemyDir === "touchright" || enemyDir === "touchleft") {
-      //   item["position"] = item["position"] + width;}
-
       enemies.forEach((element) => {
-        if (enemiesMove === "left") {
+        if (enemiesMove === "leftside" || enemiesMove === "rightside") {
+          element["position"] = element["position"] + width;
+        } else if (enemiesMove === "left") {
           element["position"] = element["position"] - 1;
         } else if (enemiesMove === "right") {
           element["position"] = element["position"] + 1;
@@ -138,19 +138,36 @@ function init() {
       //add class
       addEnemies(enemiesCurrentPosition);
 
-      if (enemies.filter((enemies) => enemies.position % width === 0)) {
-        enemies["position"] = enemies["position"] + width;
-        enemiesMove = "right";
-      } else if (
-        enemies.filter((enemies) => enemies.position % width !== width - 1)
+      //is enemy at the end? use .filter to say any enemy that does this
+      if (
+        enemies.filter((enemies) => enemies["position"] % width === 0).length >
+        0
       ) {
-        enemies["position"] = enemies["position"] + width;
-        enemiesMove = "left";
+        enemiesMove = "leftside";
+        moveDown += 1;
+        console.log(moveDown);
+      } else if (
+        enemies.filter((enemies) => enemies["position"] % width === width - 1)
+          .length > 0
+      ) {
+        enemiesMove = "rightside";
+        moveDown += 1;
+        console.log(moveDown);
       }
 
-      //is enemy at the end? use .filter to say any enemy that does this
+      //once moved down
+      if (enemiesMove === "leftside" && moveDown > 1) {
+        enemiesMove = "right";
+        moveDown = 0;
+      }
+
+      if (enemiesMove === "rightside" && moveDown > 1) {
+        enemiesMove = "left";
+        moveDown = 0;
+      }
+
       //for the left
-    }, 2000);
+    }, 400);
   }
 
   start.addEventListener("click", moveEnemies);
