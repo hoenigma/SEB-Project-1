@@ -8,7 +8,7 @@
 
 body {
   margin: 0;
-  height: 100vh;
+  height: 150vh;
   font-family: "Star Wars", sans-serif;
   color: #feda4a;;
   background-image: url(../assets/Death-Star.png);
@@ -22,7 +22,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px black solid;
+  border: 1px #feda4a solid;
   max-width: 800px;
   margin: 0 auto;
 }
@@ -54,7 +54,7 @@ body {
 
 /* Cell grid-----------------------------------  */
 .grid-wrapper {
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,8 +62,6 @@ body {
 }
 
 .grid {
-  align-items: center;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
   display: flex;
   flex-wrap: wrap;
   height: 100%;
@@ -84,7 +82,7 @@ body {
 /* create class for the player's ship-------- */
 
 .grid div.player {
-    background-image: url("../assets/xwing.jpg");
+    background-image: url("../assets/xwing.png");
     background-repeat: no-repeat;
     background-size: contain;
 }   
@@ -100,10 +98,11 @@ body {
 
 /* Create class for laser */
 .grid div.player-laser{
-    background-image: url("../assets/player-lazer.jpg");
+    background-image: url("../assets/player-lazer.png");
     background-repeat: no-repeat;
     background-size: contain;
-    transform: rotate(90deg);
+    background-position: center;
+    
 
 }
 

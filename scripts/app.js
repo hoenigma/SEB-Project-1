@@ -1,16 +1,16 @@
 //---CONNECT TO DOM AND START FUNCTION TO BUTTONS----//
 
-//create the grid (13x13?),Var for grid, give it width and total cells
+//create the grid (13x13?),Var for grid, give it width and total cells x
 
 //Grab start button and add function to start game
 //Grab reset button and add function to reset game
 
 //----PLAYER'S TANK-------------------//
-//add the player's TANK-assign cell with class (same cell each time when game starts)
-//remove player's TANK when it moves
-//give it left (keyCode =37) and right (keyCode=38) movements
-//restrict movement to bottom cell
-//stop it moving when hits end of grid
+//add the player's TANK-assign cell with class (same cell each time when game starts) x
+//remove player's TANK when it moves x
+//give it left (keyCode =37) and right (keyCode=38) movements x
+//restrict movement to bottom cell x
+//stop it moving when hits end of grid x
 //add button to lazer (space)
 //add sound effect to lazer firing
 //what happens if lazer collides with spaceship-spaceship dissapears and gain points
@@ -19,14 +19,14 @@
 //player gets hit 3 times-end game
 
 //---ENEMY SHIPS-----------------------//
-//add multiple enemy spaceships at start-assign multiple cells of class spaceships
-//Spaceships move one space after certain amount of time
+//add multiple enemy spaceships at start-assign multiple cells of class spaceships x
+//Spaceships move one space after certain amount of time x
 //remove enemy spaceship and add them to the cell to the left of them after each timeinterval
 
-//When the ships on the far left reach end of grid. ALL ships move down one then move right
-//When shipd onthe far right reach end of grid. ALL ships move down one then move left
+//When the ships on the far left reach end of grid. ALL ships move down one then move right x
+//When shipd onthe far right reach end of grid. ALL ships move down one then move left x
 //If all ships on the side are gone, the ships in the cell nect to them become new end
-//(IDEA) all ships will have the function that when 1 hits a cell at the end, ALL ships will move down and change direction
+//(IDEA) all ships will have the function that when 1 hits a cell at the end, ALL ships will move down and change direction x
 
 //assign ships at bottom of group to have class of bomb
 //a bomb will be fired from a random ship at a time interval
@@ -76,7 +76,7 @@ function init() {
   function createGrid() {
     for (let i = 0; i < totalCellCount; i++) {
       const cell = document.createElement("div");
-      cell.innerText = i;
+      //cell.innerText = i;
       grid.appendChild(cell);
       cells.push(cell);
     }
@@ -97,6 +97,7 @@ function init() {
     //move left (keyCode = 37)
     if (event.keyCode === 37 && playerCurrentPostion % width !== 0) {
       playerCurrentPostion--;
+
       // move right (keyCode = 39)
     } else if (
       event.keyCode === 39 &&
@@ -105,8 +106,26 @@ function init() {
       playerCurrentPostion++;
     }
     addPlayer(playerCurrentPostion);
+    //Spacebar (keyCode = 32)
+    if (event.keyCode === 32) {
+      let laserFired = playerCurrentPostion - width;
+      playerFire(laserFired);
+    }
   }
   document.addEventListener("keydown", handleKeyPress);
+
+  //firing projectile, laser appear above ship, laser calss remove and added to cell above
+  function addPlayerLaser() {
+    cells[position].classList.add("player-laser");
+  }
+
+  function removePlayerLaser() {
+    cells[position].classList.remove("player-laser");
+  }
+
+  function playerFire(position) {
+    cells[position].classList.add("player-laser");
+  }
 
   //functions for adding and removing the enemies
   function addEnemies() {
@@ -145,17 +164,15 @@ function init() {
       ) {
         enemiesMove = "leftside";
         moveDown += 1;
-        console.log(moveDown);
       } else if (
         enemies.filter((enemies) => enemies["position"] % width === width - 1)
           .length > 0
       ) {
         enemiesMove = "rightside";
         moveDown += 1;
-        console.log(moveDown);
       }
 
-      //once moved down
+      //once moved down, change direction
       if (enemiesMove === "leftside" && moveDown > 1) {
         enemiesMove = "right";
         moveDown = 0;
@@ -165,13 +182,9 @@ function init() {
         enemiesMove = "left";
         moveDown = 0;
       }
-
-      //for the left
-    }, 400);
+    }, 1000);
   }
 
   start.addEventListener("click", moveEnemies);
-
-  //function to move enemies
 }
 window.addEventListener("DOMContentLoaded", init);
