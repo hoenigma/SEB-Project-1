@@ -55,6 +55,7 @@ function init() {
   const totalCellCount = width * width;
   const cells = [];
   let playerCurrentPostion = 162;
+  //let laserFired = playerCurrentPostion - width;
   isGamePlaying = false;
 
   //setting up postion for enemy
@@ -70,13 +71,17 @@ function init() {
   });
 
   let enemiesMove = "left"; //start the enemies moving left
-  let moveDown = 0;
+  let moveDown = 0; //counter for moving the enemies down
+
+  //Class for lasers
+  const laserClass = "laser";
+  let laserArr = [];
 
   //creating a grid
   function createGrid() {
     for (let i = 0; i < totalCellCount; i++) {
       const cell = document.createElement("div");
-      //cell.innerText = i;
+      cell.innerText = i;
       grid.appendChild(cell);
       cells.push(cell);
     }
@@ -106,26 +111,53 @@ function init() {
       playerCurrentPostion++;
     }
     addPlayer(playerCurrentPostion);
-    //Spacebar (keyCode = 32)
     if (event.keyCode === 32) {
-      let laserFired = playerCurrentPostion - width;
-      playerFire(laserFired);
+      playerFire();
     }
   }
   document.addEventListener("keydown", handleKeyPress);
 
-  //firing projectile, laser appear above ship, laser calss remove and added to cell above
-  function addPlayerLaser() {
+  //firing projectile, laser appear above ship, laser class remove and added to cell above
+
+  function addLaser(position) {
     cells[position].classList.add("player-laser");
   }
 
-  function removePlayerLaser() {
+  function removeLaser(position) {
     cells[position].classList.remove("player-laser");
   }
 
-  function playerFire(position) {
-    cells[position].classList.add("player-laser");
+  function playerFire() {
+    let laserFired = playerCurrentPostion;
+    laserTimer = setInterval(() => {
+      if (!cells[laserFired].classList.contains("player-laser")) {
+        //cells[laserFired].classList.remove("player-laser");
+        removeLaser(laserFired);
+        laserFired = laserFired - width;
+        addLaser(laserFired);
+      } else if (laserFired > width) {
+        cells[laserFired].classList.remove("player-laser");
+        laserFired = laserFired - width;
+        cells[laserFired].classList.add("player-laser");
+        console.log(laserFired);
+      } else if (laserFired < width) {
+        clearInterval(laserTimer);
+        cells[laserFired].classList.remove("player-laser");
+      }
+    }, 500);
   }
+
+  //cells[laserFired].classList.remove("player-laser");
+  // } else if (
+  //   enemies.filter((element) => element.position === laserFired.position)
+  //     .length > 0
+  // ) {
+  //   console.log("BOTH HERE!");
+  //   removeLaser(laserFired);
+  //   enemies = enemies.filter(
+  //     (element) => element.position !== laserFired.position
+  //   ); // delete this alien from arr
+  //   cells[element.position].classList.remove("enemy"); // delete enemy class from this cel l
 
   //functions for adding and removing the enemies
   function addEnemies() {
@@ -141,7 +173,7 @@ function init() {
 
   //function for moving enemy
   function moveEnemies() {
-    setInterval(() => {
+    timer = setInterval(() => {
       //remove class
       removeEnemies(enemiesCurrentPosition);
 
@@ -182,7 +214,14 @@ function init() {
         enemiesMove = "left";
         moveDown = 0;
       }
-    }, 1000);
+      //when enemies reach bottom of grid
+      if (
+        enemies.some((elements) => elements.position >= width * width - width)
+      ) {
+        console.log("GAME OVER");
+        clearInterval(timer);
+      }
+    }, 50);
   }
 
   start.addEventListener("click", moveEnemies);
