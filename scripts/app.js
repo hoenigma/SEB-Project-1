@@ -55,6 +55,7 @@ function init() {
   const totalCellCount = width * width;
   const cells = [];
   let playerCurrentPostion = 162;
+  let playerScore = 0;
   //let laserFired = playerCurrentPostion - width;
   isGamePlaying = false;
 
@@ -130,16 +131,19 @@ function init() {
   function playerFire() {
     let laserFired = playerCurrentPostion;
     laserTimer = setInterval(() => {
-      if (!cells[laserFired].classList.contains("player-laser")) {
+      if (
+        !cells[laserFired].classList.contains("player-laser") ||
+        laserFired > width
+      ) {
         //cells[laserFired].classList.remove("player-laser");
         removeLaser(laserFired);
         laserFired = laserFired - width;
         addLaser(laserFired);
-      } else if (laserFired > width) {
-        cells[laserFired].classList.remove("player-laser");
-        laserFired = laserFired - width;
-        cells[laserFired].classList.add("player-laser");
-        console.log(laserFired);
+        // } else if (laserFired > width) {
+        //   cells[laserFired].classList.remove("player-laser");
+        //   laserFired = laserFired - width;
+        //   cells[laserFired].classList.add("player-laser");
+        //   console.log(laserFired);
       } else if (laserFired < width) {
         clearInterval(laserTimer);
         cells[laserFired].classList.remove("player-laser");
@@ -220,10 +224,37 @@ function init() {
       ) {
         console.log("GAME OVER");
         clearInterval(timer);
+        endGame();
       }
     }, 50);
   }
 
+  //endgame function
+  function endGame() {
+    clearInterval(timer); //stop moles moving
+    const highScore = localStorage.getItem("high-score");
+    if (!highScore || playerScore > highScore) {
+      localStorage.setItem("high-score", playerScore);
+    }
+    setTimeout(() => {
+      if (highScore >= playerScore) {
+        alert(
+          `Your score was ${playerScore} but the high score is ${highScore}`
+        );
+      } else {
+        alert(`New high score! ${playerScore}`);
+      }
+    }, 50);
+    console.log(`high score is`, highScore);
+  }
+
+  // Reset game function
+  function resetGame() {
+    clearInterval(timer);
+    window.location.reload();
+  }
+
   start.addEventListener("click", moveEnemies);
+  reset.addEventListener("click", resetGame);
 }
 window.addEventListener("DOMContentLoaded", init);
