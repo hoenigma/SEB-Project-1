@@ -47,6 +47,7 @@
 
 function init() {
   //Grabing elements from DOM and setting up Variables
+  const gridWrapper = document.querySelector(".grid-wrapper");
   const grid = document.querySelector(".grid");
   const start = document.getElementById("start");
   const reset = document.getElementById("reset");
@@ -147,16 +148,20 @@ function init() {
           cells[laserFired].classList.contains("player-laser")
         ) {
           console.log("Collision");
-
           enemies = enemies.filter(
-            (enemies) => enemies.position !== laserFired.position
+            (element) => element.position !== laserFired
           ); // delete this alien from arr
-          cells[laserFired].classList.remove("enemy"); // delete enemy class from this cel l
+          console.log(enemies);
+          cells[laserFired].classList.remove("enemy"); // delete enemy class from this cell
           removeLaser(laserFired);
           clearInterval(laserTimer);
           playerScore = playerScore + 100;
           console.log(playerScore);
           scoreDisplay.textContent = playerScore;
+
+          // if (!grid.classList.contains("enemy")) {
+          //   console.log("All Killed");
+          // }
         }
         //if a cell containing a laser class also contains an enemy class
         //remove the enemy and the laser from the grid.
@@ -165,7 +170,7 @@ function init() {
         clearInterval(laserTimer);
         cells[laserFired].classList.remove("player-laser");
       }
-    }, 500);
+    }, 10);
   }
 
   //functions for adding and removing the enemies
@@ -184,7 +189,7 @@ function init() {
   function moveEnemies() {
     timer = setInterval(() => {
       //remove class
-      removeEnemies(enemiesCurrentPosition);
+      removeEnemies(enemies);
 
       enemies.forEach((element) => {
         if (enemiesMove === "leftside" || enemiesMove === "rightside") {
@@ -196,7 +201,7 @@ function init() {
         }
       });
       //add class
-      addEnemies(enemiesCurrentPosition);
+      addEnemies(enemies);
 
       //is enemy at the end? use .filter to say any enemy that does this
       if (
@@ -231,7 +236,7 @@ function init() {
         clearInterval(timer);
         endGame();
       }
-    }, 1000);
+    }, 100);
   }
 
   //endgame function
@@ -256,7 +261,7 @@ function init() {
   function resetGame() {
     clearInterval(timer);
     clearInterval(laserTimer);
-    window.location.reload();
+    location.reload();
   }
 
   start.addEventListener("click", moveEnemies);
