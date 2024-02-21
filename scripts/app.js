@@ -76,10 +76,6 @@ function init() {
   let enemiesMove = "left"; //start the enemies moving left
   let moveDown = 0; //counter for moving the enemies down
 
-  //Class for lasers
-  const laserClass = "laser";
-  let laserArr = [];
-
   //creating a grid
   function createGrid() {
     for (let i = 0; i < totalCellCount; i++) {
@@ -159,13 +155,11 @@ function init() {
           console.log(playerScore);
           scoreDisplay.textContent = playerScore;
 
-          // if (!grid.classList.contains("enemy")) {
-          //   console.log("All Killed");
-          // }
+          if (enemies.length === 0) {
+            console.log("All Killed");
+            endGame();
+          }
         }
-        //if a cell containing a laser class also contains an enemy class
-        //remove the enemy and the laser from the grid.
-        //enemy needs to be removed from the array
       } else if (laserFired < width) {
         clearInterval(laserTimer);
         cells[laserFired].classList.remove("player-laser");
@@ -259,8 +253,6 @@ function init() {
 
   // Reset game function
   function resetGame() {
-    clearInterval(timer);
-    clearInterval(laserTimer);
     location.reload();
   }
 
