@@ -51,13 +51,15 @@ function init() {
   const grid = document.querySelector(".grid");
   const start = document.getElementById("start");
   const reset = document.getElementById("reset");
-  const lives = document.querySelectorAll(".life");
+  const lives = document.querySelector(".lives");
   let scoreDisplay = document.getElementById("score-display");
   const width = 13;
   const totalCellCount = width * width;
   const cells = [];
+  let bombArr = [];
   let playerCurrentPostion = 162;
   let playerScore = 0;
+
   //let laserFired = playerCurrentPostion - width;
   isGamePlaying = false;
 
@@ -232,6 +234,72 @@ function init() {
       }
     }, 100);
   }
+
+  // enemies shooting function
+  // function for add + remove class
+  function addBombs(position) {
+    cells[position].classList.add("enemy-bomb");
+  }
+
+  function removeBombs(position) {
+    cells[position].classList.remove("enemy-bomb");
+  }
+
+  function bombMovement() {
+    //remove class
+    bombArr.forEach((item) => {
+      cells[item.position].classList.remove("enemy-bomb");
+    });
+
+    //move and delete if reaches bottom
+    bombArr.forEach((item) => {
+      console.log(item);
+      if (item.position > width * width - 1) {
+        // remove it if reaches bottom of grid
+        item.position = 169;
+      } else {
+        item.position = item.position + width; //move one down
+      }
+
+      if (playerCurrentPostion === item.position) {
+        // there is the player in new position
+        console.log("PLAYER HIT!");
+        item.position = 169; // delete this bomb
+        lives -= 1; // player has 1 less life
+        livesSpan.innerHTML = lives;
+        if (lives === 0) {
+          console.log("GAME OVER 0 LIVES");
+          clearInterval(timer);
+          endGame(); //! GAMEOVER - LIFE
+        }
+      }
+    });
+
+    // add again
+    bombArr.forEach((item) => {
+      cells[item["position"]].classList.add("enemy-bomb");
+    });
+  }
+  bombMovement();
+
+  function newBomb() {
+    //console.log(enemies.length);
+    const rate = Math.floor(Math.random() * enemies.length * 2); //number between 0 and enemies*2
+
+    //console.log(rate);
+    const enemyFiredLoc = enemies[rate["position"]] + width;
+    if (
+      !enemies.some((item) => item.position >= width * width - width * 2) &&
+      rate < enemies.length &&
+      !cells[enemyFiredLoc].classList.contains("enemy-bomb")
+    ) {
+      //if enemy is not in last row, and if there is no enemy below
+      addItem(enemyFiredLoc, bombClass); //add class
+      bombArr.push({ position: enemyFiredLoc }); // put in array with location
+      //console.log(bombArr)
+    }
+  }
+  newBomb();
 
   //endgame function
   function endGame() {
