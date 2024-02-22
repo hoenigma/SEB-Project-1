@@ -83,7 +83,7 @@ function init() {
   function createGrid() {
     for (let i = 0; i < totalCellCount; i++) {
       const cell = document.createElement("div");
-      cell.innerText = i;
+      //cell.innerText = i;
       grid.appendChild(cell);
       cells.push(cell);
     }
@@ -136,7 +136,6 @@ function init() {
         !cells[laserFired].classList.contains("player-laser") ||
         laserFired > width
       ) {
-        //cells[laserFired].classList.remove("player-laser");
         removeLaser(laserFired);
         laserFired = laserFired - width;
         addLaser(laserFired);
@@ -149,8 +148,8 @@ function init() {
           console.log("Collision");
           enemies = enemies.filter(
             (element) => element.position !== laserFired
-          ); // delete this alien from arr
-          console.log(enemies);
+          ); // delete this enemy from arr
+          //console.log(enemies);
           cells[laserFired].classList.remove("enemy"); // delete enemy class from this cell
           removeLaser(laserFired);
           clearInterval(laserTimer);
@@ -165,9 +164,9 @@ function init() {
         }
       } else if (laserFired < width) {
         clearInterval(laserTimer);
-        cells[laserFired].classList.remove("player-laser");
+        removeLaser(laserFired);
       }
-    }, 10);
+    }, 100);
   }
 
   //functions for adding and removing the enemies
@@ -230,11 +229,10 @@ function init() {
         enemies.some((elements) => elements.position >= width * width - width)
       ) {
         console.log("GAME OVER");
-        clearInterval(timer);
         endGame();
       }
       dropBomb();
-    }, 1000);
+    }, 500);
   }
 
   // enemies shooting function
@@ -251,15 +249,15 @@ function init() {
   function randomEnemy() {
     let rate = Math.floor(Math.random() * enemies.length); //chosing a random number for the bomb to drop
 
-    console.log(rate);
+    //console.log(rate);
     const enemyFiredLoc = enemies[rate]?.position + width; //use the random number to pick an enemy
-    console.log(enemyFiredLoc);
+    //console.log(enemyFiredLoc);
     return enemyFiredLoc;
   }
 
   function dropBomb() {
     let bombStart = randomEnemy();
-    console.log(bombStart);
+    //console.log(bombStart);
     const dropInterval = setInterval(() => {
       removeBombs(bombStart);
       bombStart = bombStart += 13;
@@ -276,23 +274,27 @@ function init() {
         console.log("player hit!");
         lives = lives - 1;
         livesSpan.innerHTML = lives;
-      }
-      if (lives === 0) {
-        console.log("Game Over");
-        clearInterval(dropInterval);
-        clearInterval(timer);
-        endGame();
+        if (lives === 0) {
+          console.log("Game Over");
+          clearInterval(dropInterval);
+          clearInterval(timer);
+          endGame();
+        }
       }
       // if (isGamePlaying === false) {
       //   removeBombs(bombStart);
       //   clearInterval(dropInterval);
       // }
-    }, 500);
+    }, 1000);
   }
 
   //endgame function
   function endGame() {
-    //clearInterval(timer)
+    clearInterval(timer);
+    clearInterval(dropInterval);
+    clearInterval(laserTimer);
+    //removeEnemies();
+
     const highScore = localStorage.getItem("high-score");
     if (!highScore || playerScore > highScore) {
       localStorage.setItem("high-score", playerScore);

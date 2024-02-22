@@ -72,7 +72,7 @@ body {
 }
 
 .grid div {
-  border: 1px solid lightgrey;
+  /* border: 1px solid lightgrey; */
   flex-grow: 1;
   height: calc(100% / 13);
   width: calc(100% / 13);
