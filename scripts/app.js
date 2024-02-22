@@ -233,83 +233,66 @@ function init() {
         clearInterval(timer);
         endGame();
       }
+      dropBomb();
     }, 1000);
-    bombTimer = setInterval(() => {
-      newBomb();
-      moveBomb();
-    }, 3000);
   }
 
   // enemies shooting function
   // function for add + remove class
-  function addBombs(position) {
-    cells[position].classList.add("enemy-bomb");
+  function addBombs(element) {
+    cells[element].classList.add("enemy-bomb");
   }
 
-  function removeBombs(position) {
-    cells[position].classList.remove("enemy-bomb");
+  function removeBombs(element) {
+    cells[element].classList.remove("enemy-bomb");
   }
 
-  function newBomb() {
+  //function for chossing a random enemy to drop a bomb
+  function randomEnemy() {
     let rate = Math.floor(Math.random() * enemies.length); //chosing a random number for the bomb to drop
 
     console.log(rate);
     const enemyFiredLoc = enemies[rate]?.position + width; //use the random number to pick an enemy
     console.log(enemyFiredLoc);
-    if (
-      !enemies.some((item) => item.position >= width * width - width * 2) &&
-      !cells[enemyFiredLoc].classList.contains("enemy")
-    ) {
-      //if enemy is not in last row, and if there is no enemy below
-      cells[enemyFiredLoc].classList.add("enemy-bomb"); //add class
-      bombArr.push({ position: enemyFiredLoc }); // put in array with location
-      console.log(bombArr);
-    }
+    return enemyFiredLoc;
   }
-  //newBomb();
 
-  function moveBomb() {
-    //remove class
-    bombMove = setInterval(() => {
-      bombArr.forEach((item) => {
-        cells[item["position"]].classList.remove("enemy-bomb");
-      });
-
-      //move and delete if reaches bottom
-      bombArr.forEach((item) => {
-        console.log(item);
-        if (item.position > width * width - width) {
-          // remove it if reaches bottom of grid
-          cells[item["position"]].classList.remove("enemy-bomb");
-          clearInterval(bombMove);
-        } else {
-          item.position = item.position + width; //move one down
-          bombArr.forEach((item) => {
-            cells[item["position"]].classList.add("enemy-bomb");
-          });
-        }
-
-        if (playerCurrentPostion === item.position) {
-          // there is the player in new position
-          console.log("PLAYER HIT!");
-          cells[item["position"]].classList.remove("enemy-bomb"); // delete this bomb
-          clearInterval(bombMove);
-          lives = lives - 1; // player has 1 less life
-          livesSpan.innerHTML = lives; //update on screen
-          if (lives === 0) {
-            console.log("Game Over");
-            clearInterval(timer);
-            endGame();
-          }
-        }
-      });
+  function dropBomb() {
+    let bombStart = randomEnemy();
+    console.log(bombStart);
+    const dropInterval = setInterval(() => {
+      removeBombs(bombStart);
+      bombStart = bombStart += 13;
+      addBombs(bombStart);
+      console.log("bomb moved");
+      if (bombStart > 155) {
+        console.log("bomb gone");
+        removeBombs(bombStart);
+        clearInterval(dropInterval);
+      }
+      if (bombStart === playerCurrentPostion) {
+        removeBombs(bombStart);
+        clearInterval(dropInterval);
+        console.log("player hit!");
+        lives = lives - 1;
+        livesSpan.innerHTML = lives;
+      }
+      if (lives === 0) {
+        console.log("Game Over");
+        clearInterval(dropInterval);
+        clearInterval(timer);
+        endGame();
+      }
+      // if (isGamePlaying === false) {
+      //   removeBombs(bombStart);
+      //   clearInterval(dropInterval);
+      // }
     }, 500);
   }
 
-  //moveBomb();
-
   //endgame function
   function endGame() {
+    //clearInterval(timer)
     const highScore = localStorage.getItem("high-score");
     if (!highScore || playerScore > highScore) {
       localStorage.setItem("high-score", playerScore);
@@ -322,7 +305,7 @@ function init() {
       } else {
         alert(`New high score! ${playerScore}`);
       }
-    }, 50);
+    }, 1000);
     console.log(`high score is`, highScore);
   }
 
