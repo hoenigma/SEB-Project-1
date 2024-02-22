@@ -51,7 +51,8 @@ function init() {
   const grid = document.querySelector(".grid");
   const start = document.getElementById("start");
   const reset = document.getElementById("reset");
-  const lives = document.querySelector(".lives");
+  let livesSpan = document.querySelector(".lives");
+  let lives = 3;
   let scoreDisplay = document.getElementById("score-display");
   const width = 13;
   const totalCellCount = width * width;
@@ -250,7 +251,6 @@ function init() {
   }
 
   function newBomb() {
-    //console.log(enemies.length);
     let rate = Math.floor(Math.random() * enemies.length); //chosing a random number for the bomb to drop
 
     console.log(rate);
@@ -266,43 +266,47 @@ function init() {
       console.log(bombArr);
     }
   }
-  newBomb();
+  //newBomb();
 
   function moveBomb() {
     //remove class
-    bombArr.forEach((item) => {
-      cells[item.position].classList.remove("enemy-bomb");
-    });
+    bombMove = setInterval(() => {
+      bombArr.forEach((item) => {
+        cells[item["position"]].classList.remove("enemy-bomb");
+      });
 
-    //move and delete if reaches bottom
-    bombArr.forEach((item) => {
-      console.log(item);
-      if (item.position > width * width - 1) {
-        // remove it if reaches bottom of grid
-        item.position = 169;
-      } else {
-        item.position = item.position + width; //move one down
-      }
-
-      if (playerCurrentPostion === item.position) {
-        // there is the player in new position
-        console.log("PLAYER HIT!");
-        item.position = 169; // delete this bomb
-        lives -= 1; // player has 1 less life
-        livesSpan.innerHTML = lives;
-        if (lives === 0) {
-          console.log("GAME OVER 0 LIVES");
-          clearInterval(timer);
-          endGame(); //! GAMEOVER - LIFE
+      //move and delete if reaches bottom
+      bombArr.forEach((item) => {
+        console.log(item);
+        if (item.position > width * width - width) {
+          // remove it if reaches bottom of grid
+          cells[item["position"]].classList.remove("enemy-bomb");
+          clearInterval(bombMove);
+        } else {
+          item.position = item.position + width; //move one down
+          bombArr.forEach((item) => {
+            cells[item["position"]].classList.add("enemy-bomb");
+          });
         }
-      }
-    });
 
-    // add again
-    bombArr.forEach((item) => {
-      cells[item["position"]].classList.add("enemy-bomb");
-    });
+        if (playerCurrentPostion === item.position) {
+          // there is the player in new position
+          console.log("PLAYER HIT!");
+          cells[item["position"]].classList.remove("enemy-bomb"); // delete this bomb
+          clearInterval(bombMove);
+          lives = lives - 1; // player has 1 less life
+          livesSpan.innerHTML = lives; //update on screen
+          if (lives === 0) {
+            console.log("Game Over");
+            clearInterval(timer);
+            endGame();
+          }
+        }
+      });
+    }, 500);
   }
+
+  //moveBomb();
 
   //endgame function
   function endGame() {
