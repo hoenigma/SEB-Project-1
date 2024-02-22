@@ -232,7 +232,11 @@ function init() {
         clearInterval(timer);
         endGame();
       }
-    }, 100);
+    }, 1000);
+    bombTimer = setInterval(() => {
+      newBomb();
+      moveBomb();
+    }, 3000);
   }
 
   // enemies shooting function
@@ -245,7 +249,26 @@ function init() {
     cells[position].classList.remove("enemy-bomb");
   }
 
-  function bombMovement() {
+  function newBomb() {
+    //console.log(enemies.length);
+    let rate = Math.floor(Math.random() * enemies.length); //chosing a random number for the bomb to drop
+
+    console.log(rate);
+    const enemyFiredLoc = enemies[rate]?.position + width; //use the random number to pick an enemy
+    console.log(enemyFiredLoc);
+    if (
+      !enemies.some((item) => item.position >= width * width - width * 2) &&
+      !cells[enemyFiredLoc].classList.contains("enemy")
+    ) {
+      //if enemy is not in last row, and if there is no enemy below
+      cells[enemyFiredLoc].classList.add("enemy-bomb"); //add class
+      bombArr.push({ position: enemyFiredLoc }); // put in array with location
+      console.log(bombArr);
+    }
+  }
+  newBomb();
+
+  function moveBomb() {
     //remove class
     bombArr.forEach((item) => {
       cells[item.position].classList.remove("enemy-bomb");
@@ -280,26 +303,6 @@ function init() {
       cells[item["position"]].classList.add("enemy-bomb");
     });
   }
-  bombMovement();
-
-  function newBomb() {
-    //console.log(enemies.length);
-    const rate = Math.floor(Math.random() * enemies.length * 2); //number between 0 and enemies*2
-
-    //console.log(rate);
-    const enemyFiredLoc = enemies[rate["position"]] + width;
-    if (
-      !enemies.some((item) => item.position >= width * width - width * 2) &&
-      rate < enemies.length &&
-      !cells[enemyFiredLoc].classList.contains("enemy-bomb")
-    ) {
-      //if enemy is not in last row, and if there is no enemy below
-      addItem(enemyFiredLoc, bombClass); //add class
-      bombArr.push({ position: enemyFiredLoc }); // put in array with location
-      //console.log(bombArr)
-    }
-  }
-  newBomb();
 
   //endgame function
   function endGame() {
