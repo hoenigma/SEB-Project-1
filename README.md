@@ -10,12 +10,19 @@ The goal is to clear all the enemies before they reach the ground of shot the pl
 ## Overview and Concept
 
 I had a week for this project to build a grid-base game using HTML, CSS and Javascript.
+My version is very similar to space invaders but with a Star Wars styling
 
 ## Technologies used
 
 ### HTML
 
+- Header using Star Wars font found at "https://fonts.cdnfonts.com/css/star-wars"
+- Div containing score, lives, start button, reset button and instructions
+- Grid with a 169 celss (13 x 13 grid)
+
 ### CSS
+
+-
 
 ### JavaScript
 

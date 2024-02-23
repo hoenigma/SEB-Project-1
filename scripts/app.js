@@ -1,50 +1,3 @@
-//---CONNECT TO DOM AND START FUNCTION TO BUTTONS----//
-
-//create the grid (13x13?),Var for grid, give it width and total cells x
-
-//Grab start button and add function to start game
-//Grab reset button and add function to reset game
-
-//----PLAYER'S TANK-------------------//
-//add the player's TANK-assign cell with class (same cell each time when game starts) x
-//remove player's TANK when it moves x
-//give it left (keyCode =37) and right (keyCode=38) movements x
-//restrict movement to bottom cell x
-//stop it moving when hits end of grid x
-//add button to lazer (space)
-//add sound effect to lazer firing
-//what happens if lazer collides with spaceship-spaceship dissapears and gain points
-//what happens if lazer hits top of cellgrid-stop lazer
-//player gets hit by lazer-loses live
-//player gets hit 3 times-end game
-
-//---ENEMY SHIPS-----------------------//
-//add multiple enemy spaceships at start-assign multiple cells of class spaceships x
-//Spaceships move one space after certain amount of time x
-//remove enemy spaceship and add them to the cell to the left of them after each timeinterval
-
-//When the ships on the far left reach end of grid. ALL ships move down one then move right x
-//When shipd onthe far right reach end of grid. ALL ships move down one then move left x
-//If all ships on the side are gone, the ships in the cell nect to them become new end
-//(IDEA) all ships will have the function that when 1 hits a cell at the end, ALL ships will move down and change direction x
-
-//assign ships at bottom of group to have class of bomb
-//a bomb will be fired from a random ship at a time interval
-//ship dissapers if hit by lazer
-//ships keep in formation even if ship next to it is gone
-//After some ships are gone, increase speed of enemies moving
-//If all ships are gone, end game
-
-//---END GAME-----------------------//
-//Win- Player shoots all enemies
-//Show score, let them know if new highscore or what the highscore is
-//Button for next level/retry
-
-//Lose- player shot 3 times ot enemy reaches same row as player
-//Game over, show score, show current highscore and button to retry
-
-//for both scenarios, store the players score
-
 function init() {
   //Grabing elements from DOM and setting up Variables
   const gridWrapper = document.querySelector(".grid-wrapper");
@@ -61,9 +14,6 @@ function init() {
   let playerScore = 0;
   const audioPlayer = new Audio("./assets/Gun+Silencer.mp3");
   const audioEnemy = new Audio("./assets/Gun+1.mp3");
-
-  //let laserFired = playerCurrentPostion - width;
-  isGamePlaying = false;
 
   //setting up postion for enemy
   let enemies = [];
