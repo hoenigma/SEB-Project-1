@@ -171,7 +171,7 @@ function init() {
         clearInterval(laserTimer);
         removeLaser(laserFired);
       }
-    }, 500);
+    }, 100);
   }
 
   //functions for adding and removing the enemies
@@ -238,7 +238,7 @@ function init() {
         endGame();
       }
       dropBomb();
-    }, 1000);
+    }, 700);
   }
 
   // enemies shooting function
@@ -291,7 +291,7 @@ function init() {
         //   removeBombs(bombStart);
         //   clearInterval(dropInterval);
         // }
-      }, 1000);
+      }, 800);
     }
   }
 

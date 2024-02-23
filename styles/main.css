@@ -8,12 +8,12 @@
 
 body {
   margin: 0;
-  height: 150vh;
+  height: 100vh;
   font-family: "Star Wars", sans-serif;
-  color: #feda4a;;
+  color: #feda4a;
   background-image: url(../assets/Death-Star.png);
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* Header Container & display----------------------  */
@@ -24,7 +24,7 @@ body {
   align-items: center;
   border: 1px #feda4a solid;
   max-width: 800px;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 /* spread out the elements in the display bar */
@@ -54,11 +54,10 @@ body {
 
 /* Cell grid-----------------------------------  */
 .grid-wrapper {
-  height: 90vh;
+  height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
 .grid {
@@ -82,41 +81,49 @@ body {
 /* create class for the player's ship-------- */
 
 .grid div.player {
-    background-image: url("../assets/xwing.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-}   
+  background-image: url("../assets/xwing.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
 
 /* Create class for the enemy spaceship */
 
 .grid div.enemy {
-    background-image: url("../assets/tiefighter.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain; 
+  background-image: url("../assets/tiefighter.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 /* Create class for laser */
-.grid div.player-laser{
-    background-image: url("../assets/player-lazer.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    
-
+.grid div.player-laser {
+  background-image: url("../assets/player-lazer.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 /* create class for bomb */
 .grid div.enemy-bomb {
-    background-image: url("../assets/enemy-lazer.jpg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-
+  background-image: url("../assets/enemy-lazer.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
+/* style the button */
+button {
+  margin: 15px;
+  padding: 5px 15px;
+  border-radius: 5px;
+  font-family: "Star Wars", sans-serif;
+  background-color: #feda4a;
+}
 
-
-/* animation for laser moving up
-/* animation for bomb going down*/
-
+/* style the hover */
+button:hover {
+  cursor: pointer;
+  color: #feda4a;
+  background-color: black;
+  border: #feda4a solid 1px;
+}
