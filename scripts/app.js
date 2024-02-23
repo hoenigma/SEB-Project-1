@@ -57,7 +57,6 @@ function init() {
   const width = 13;
   const totalCellCount = width * width;
   const cells = [];
-  let bombArr = [];
   let playerCurrentPostion = 162;
   let playerScore = 0;
 
@@ -232,7 +231,7 @@ function init() {
         endGame();
       }
       dropBomb();
-    }, 500);
+    }, 1000);
   }
 
   // enemies shooting function
@@ -246,55 +245,60 @@ function init() {
   }
 
   //function for chossing a random enemy to drop a bomb
-  function randomEnemy() {
+  // function randomEnemy() {
+  //   let rate = Math.floor(Math.random() * enemies.length); //chosing a random number for the bomb to drop
+
+  //   //console.log(rate);
+  //   const enemyFiredLoc = enemies[rate]?.position + width; //use the random number to pick an enemy
+  //   //console.log(enemyFiredLoc);
+  //   return enemyFiredLoc;
+  // }
+
+  function dropBomb() {
     let rate = Math.floor(Math.random() * enemies.length); //chosing a random number for the bomb to drop
 
     //console.log(rate);
-    const enemyFiredLoc = enemies[rate]?.position + width; //use the random number to pick an enemy
+    let enemyFiredLoc = enemies[rate]?.position + width; //use the random number to pick an enemy
     //console.log(enemyFiredLoc);
-    return enemyFiredLoc;
-  }
-
-  function dropBomb() {
-    let bombStart = randomEnemy();
-    //console.log(bombStart);
-    const dropInterval = setInterval(() => {
-      removeBombs(bombStart);
-      bombStart = bombStart += 13;
-      addBombs(bombStart);
-      console.log("bomb moved");
-      if (bombStart > 155) {
-        console.log("bomb gone");
-        removeBombs(bombStart);
-        clearInterval(dropInterval);
-      }
-      if (bombStart === playerCurrentPostion) {
-        removeBombs(bombStart);
-        clearInterval(dropInterval);
-        console.log("player hit!");
-        lives = lives - 1;
-        livesSpan.innerHTML = lives;
-        if (lives === 0) {
-          console.log("Game Over");
+    if (
+      !enemies.some(
+        (element) => element.position >= width * width - width * 2
+      ) &&
+      !cells[enemyFiredLoc].classList.contains("enemy")
+    ) {
+      const dropInterval = setInterval(() => {
+        removeBombs(enemyFiredLoc);
+        enemyFiredLoc = enemyFiredLoc += 13;
+        addBombs(enemyFiredLoc);
+        console.log("bomb moved");
+        if (enemyFiredLoc > 155) {
+          console.log("bomb gone");
+          removeBombs(enemyFiredLoc);
           clearInterval(dropInterval);
-          clearInterval(timer);
-          endGame();
         }
-      }
-      // if (isGamePlaying === false) {
-      //   removeBombs(bombStart);
-      //   clearInterval(dropInterval);
-      // }
-    }, 1000);
+        if (enemyFiredLoc === playerCurrentPostion) {
+          removeBombs(enemyFiredLoc);
+          clearInterval(dropInterval);
+          console.log("player hit!");
+          lives = lives - 1;
+          livesSpan.innerHTML = lives;
+          if (lives === 0) {
+            console.log("Game Over");
+            clearInterval(dropInterval);
+            endGame();
+          }
+        }
+        // if (isGamePlaying === false) {
+        //   removeBombs(bombStart);
+        //   clearInterval(dropInterval);
+        // }
+      }, 2000);
+    }
   }
 
   //endgame function
   function endGame() {
-    clearInterval(timer);
-    clearInterval(dropInterval);
-    clearInterval(laserTimer);
-    //removeEnemies();
-
+    removeEnemies();
     const highScore = localStorage.getItem("high-score");
     if (!highScore || playerScore > highScore) {
       localStorage.setItem("high-score", playerScore);
@@ -307,7 +311,7 @@ function init() {
       } else {
         alert(`New high score! ${playerScore}`);
       }
-    }, 1000);
+    }, 500);
     console.log(`high score is`, highScore);
   }
 
