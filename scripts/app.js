@@ -99,7 +99,7 @@ function init() {
           cells[laserFired].classList.contains("enemy") &&
           cells[laserFired].classList.contains("player-laser")
         ) {
-          console.log("Collision");
+          //console.log("Collision");
           enemies = enemies.filter(
             (element) => element.position !== laserFired
           ); // delete this enemy from arr
@@ -108,7 +108,7 @@ function init() {
           removeLaser(laserFired);
           clearInterval(laserTimer);
           playerScore = playerScore + 100;
-          console.log(playerScore);
+          //console.log(playerScore);
           scoreDisplay.textContent = playerScore;
 
           if (enemies.length === 0) {
