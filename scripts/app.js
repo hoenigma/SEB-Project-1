@@ -59,6 +59,8 @@ function init() {
   const cells = [];
   let playerCurrentPostion = 162;
   let playerScore = 0;
+  const audioPlayer = new Audio("./assets/Gun+Silencer.mp3");
+  const audioEnemy = new Audio("./assets/Gun+1.mp3");
 
   //let laserFired = playerCurrentPostion - width;
   isGamePlaying = false;
@@ -112,8 +114,11 @@ function init() {
       playerCurrentPostion++;
     }
     addPlayer(playerCurrentPostion);
+
     if (event.keyCode === 32) {
       playerFire();
+      audioPlayer.play();
+      event.preventDefault();
     }
   }
   document.addEventListener("keydown", handleKeyPress);
@@ -158,6 +163,7 @@ function init() {
 
           if (enemies.length === 0) {
             console.log("All Killed");
+            clearInterval(laserTimer);
             endGame();
           }
         }
@@ -165,7 +171,7 @@ function init() {
         clearInterval(laserTimer);
         removeLaser(laserFired);
       }
-    }, 100);
+    }, 500);
   }
 
   //functions for adding and removing the enemies
@@ -228,6 +234,7 @@ function init() {
         enemies.some((elements) => elements.position >= width * width - width)
       ) {
         console.log("GAME OVER");
+        clearInterval(timer);
         endGame();
       }
       dropBomb();
@@ -244,22 +251,13 @@ function init() {
     cells[element].classList.remove("enemy-bomb");
   }
 
-  //function for chossing a random enemy to drop a bomb
-  // function randomEnemy() {
-  //   let rate = Math.floor(Math.random() * enemies.length); //chosing a random number for the bomb to drop
-
-  //   //console.log(rate);
-  //   const enemyFiredLoc = enemies[rate]?.position + width; //use the random number to pick an enemy
-  //   //console.log(enemyFiredLoc);
-  //   return enemyFiredLoc;
-  // }
-
   function dropBomb() {
     let rate = Math.floor(Math.random() * enemies.length); //chosing a random number for the bomb to drop
 
     //console.log(rate);
     let enemyFiredLoc = enemies[rate]?.position + width; //use the random number to pick an enemy
     //console.log(enemyFiredLoc);
+
     if (
       !enemies.some(
         (element) => element.position >= width * width - width * 2
@@ -277,6 +275,7 @@ function init() {
           clearInterval(dropInterval);
         }
         if (enemyFiredLoc === playerCurrentPostion) {
+          audioEnemy.play();
           removeBombs(enemyFiredLoc);
           clearInterval(dropInterval);
           console.log("player hit!");
@@ -292,7 +291,7 @@ function init() {
         //   removeBombs(bombStart);
         //   clearInterval(dropInterval);
         // }
-      }, 2000);
+      }, 1000);
     }
   }
 
@@ -311,7 +310,7 @@ function init() {
       } else {
         alert(`New high score! ${playerScore}`);
       }
-    }, 500);
+    }, 50);
     console.log(`high score is`, highScore);
   }
 
