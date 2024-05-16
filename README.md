@@ -1,16 +1,46 @@
-# General Assembly
+# General Assembly-Project 1 SPace Invaders
 
-Project 1 is a space invaders inspired game called Tie Fighter Attack.
-The goal is to clear all the enemies before they reach the ground of shot the player 3 times.
+For project 1, I was given the task to create a grid game using HTML, JavaScript and CSS. This is reviewing the work that was learnt on the course during the first 3 weeks.
+There were 10 options of games to choose and I chose to make a space invaders game that is called Tie Fighter Attack. The goal is to clear all the enemies before they reach the ground or shoot the player 3 times.
 
-## Game's Link
+## Deployment Link
 
 [Tie Fighter Attack](https://hoenigma.github.io/SEB-Project-1/)
 
-## Overview and Concept
+## Code Installation
 
-I had a week for this project to build a grid-base game using HTML, CSS and Javascript.
-My version is very similar to space invaders but with a Star Wars styling
+To get this project up and running on your local machine, follow these steps:
+
+1. Clone the repository: git clone git.github.com: hoenigma/seb-project-1.git
+2. Install the packages: npm i
+3. Run the project: npm run dev
+
+## Timeframe
+
+This was a solo project that I had a week to complete.
+My version is very similar to space invaders but with a Star Wars styling.
+
+## Brief
+
+The brief for this project was to create a browser game created on a grid.
+The requirements and deliverables for this game were:
+
+- Create a working game
+- Design logic and display if the player wins/lose
+- Include separate files for HTML, CSS and JavaScript
+- Deploy the game online (done through github)
+
+There were a few options given for what game I could make and I decided to build Space Invaders. For Space Invaders I had a couple more requirements which were:
+
+- The player should be able to clear at least one wave of aliens
+- Player score should be displayed at the end of the game
+
+I was given necessary deliverables for this project which, were the following:
+
+- A working game, built by you, hosted somewhere on the internet
+- A link to your hosted working game in the URL section of your Github repo
+- A git repository hosted on Github, with a link to your hosted game, and frequent commits dating back to the very beginning of the project
+- A readme.md file with explanations of the technologies used, the approach taken, installation instructions, unsolved problems, etc. (completed post project)
 
 ## Technologies used
 
@@ -33,6 +63,24 @@ My version is very similar to space invaders but with a Star Wars styling
 - Enemies drop bombs via `setInterval`
 - Click to start and reset gane
 - `Endgame` for 3 different scenarios- Player wins, enemy reaches bottom and enemy kills player
+
+## Planning
+
+Below is a wireframing drawn on paper:
+![Wire Frame](images/WireFrame.jpg)
+
+The drawing shows how I wanted the page to look. A heading would be at the top with a navbar under to show scores, lives, a start and reset button. The main grid would hold the game.
+
+Pseudocoding was written for this project splitting it up to these sections:
+
+- Creating the grid
+- Adding and moving the player on the grid
+- Firing the laser for the player and laser collision
+- Adding and moving the enemies
+- Firing the bomb for the enemies
+- Endgame
+
+## Build Process
 
 ## What Happened each Day
 
@@ -57,6 +105,8 @@ One end game fucntion was created for the 3 end game scenarios and to show the h
 Day 5:
 On the last day, I had to sort out some problems with the end game and clear up some of the code.
 I had some time so I added some audio for the lasers and styled up the start and reset buttons.
+
+## Detailed Look at Features
 
 ### Game Start Screen
 
@@ -120,16 +170,23 @@ Each of the senarios will create an alert either saying:
 `Your score was ${playerScore} but the high score is ${highScore}` or (`New high score! ${playerScore}`);
 High Score is storeed in local storage.
 
-## Key Learnings:
+## Key Learnings
 
-The main thing I learnt was how to structure code and where to execute them.
-I also had more practice on flex boxes and `setInterval`
+Only having a week on JavaScript I was still learning how it functioned and the best way to structure my code. With help from the instructors, we spoke about why certain code has to be moved around and placed before other sections.
+One of the challenges I had with CSS was with flex boxes and how to organise multiple ones in the way I wanted to display them. By trial and error and using resources like w3 schools, I was able to get them to work.
 
-## Challenges:
+This project I had to manage myself and make sure I was hitting the requirements that I had to reach for this project. To do this, each day I would give myself a goal to reach to complete certain functions and check it off the list in my pseudo code.
 
-- Getting enemies to move down
-- Sorting out setIntervals and how to stop them for endGame
-- Stopping enemies from reseting everytime they moved
+## Challenges and Wins
+
+To get the enemies to move down was a challenge as I had to make sure that any enemy that reached the left/right side of the grid was able to get all the enemies to move down and for the enemies to change direction. For changing direction, I had the variable enemiesMove which I could say is left or right and set an if/else if statement to say what to do when the variable was left or right. For moving the enemies down, I created a new variable called moveDown which at the start I had to set 0 so the enemies would not move down at the start.
+
+To get any enemy to move down and change direction I used the filter function to say an enemy that has a position which is at either end of the grid cell to move down and change direction. A problem here was when I set the enemies to move the opposite way and move down, the enemies would then move down again as the moveDown varaibe was still at 1( as the enemies was still at the side). TO get it so the enemies wouldn’t move down again, I had to create new values called leftside and rightside. This meant at first the enemies would move down 1 cell, have the value changed to leftside/rightside and then either change direction to left or right and reset moveDown to 0 to stop it moving down.
+
+![EnemiesDown](images/enemiesDown)
+
+When making the endGame function, I had problems with lazers and enemies carrying on moving after the game had finished. This was due to the setInterval carrying on once the message showing the player score was removed.
+To fix this I had to add clearInterrval functions to the bombs for when the lives were 0 or the ships were at the bottom of the page. To stop the enies from moving I used the removeEnemies function I made earlier and added it to the endGame function so there would be no enemies when the game ended.
 
 ## Future Improvements:
 
@@ -138,4 +195,5 @@ I also had more practice on flex boxes and `setInterval`
 
 ## Bugs:
 
-- The lasers from the player can get stuck on the screen sometimes
+If too many lasers are fired, they can get stuck on the screen.
+I would look to fix this by adding a restriction for how many lasers could be on the screen to help with the game running. In the playerFire function I could add a new variable called numberOfLasers and everytime one is fired the counter goes up by one. When the laser hits an enemy or reaches the enmd fo the screen the counter would go down by 1. Then an if statement would be added saying if numberOfLasers === 4, player can’t fire, Else, run the code for playerFire.
