@@ -67,7 +67,7 @@ I was given necessary deliverables for this project which, were the following:
 ## Planning
 
 Below is a wireframing drawn on paper:
-![Wire Frame](images/WireFrame.jpg)
+![Wire Frame](Images/WireFrame.jpg)
 
 The drawing shows how I wanted the page to look. A heading would be at the top with a navbar under to show scores, lives, a start and reset button. The main grid would hold the game.
 
@@ -110,7 +110,7 @@ I had some time so I added some audio for the lasers and styled up the start and
 
 ### Game Start Screen
 
-![Start Screen](images//GameStartScreen.png)
+![Start Screen](Images//GameStartScreen.png)
 Game starts with all the player and ememies on the screen.
 In the bar there is the score, lives, start and reset button.
 
@@ -122,7 +122,7 @@ To make sure the ship doesn't go thrpugh the end of the grid, statement were mad
 - On the left if the position of the ship divided by the width had no remainder, it was on the far left grid cell and couldn't go any more left
 - On the right if the position of the ship divided by the width had a remainder of width -1, it was on the far right grid cell and couldn't go any more right.
 
-  ![Player Moves](images/PlayerMove.png)
+  ![Player Moves](Images/PlayerMove.png)
 
 ### Player firing
 
@@ -138,7 +138,7 @@ If the laser hits an enemy, the enemy will dissapear (remove class of enemy) and
 
 If the lazer makes it to the top of the grid (lazerFired < width) the lazer will be removed (clearInterval and remove class of lazer).
 
-![Player Fires](images/PlayerLaserFired.png)
+![Player Fires](Images/PlayerLaserFired.png)
 
 ### Enemy movement
 
@@ -147,7 +147,7 @@ The start of the game they are moving left (value of "left") meaning they will a
 
 When the enemies located on the far left reach the end of the grid, its given the value of "leftside" and a counter called moveDown goes up by 1. This makes all the enmies move down 1 cell (+ width). WHen it goes down the moveDown counter becomes 2 and as moveDown is now bigger than 1 the enemiesMove is now "right" and the moveDown counter is rested. This repeates when the enemies hit the far right side and the direction changes.
 
-![Enemy Moves](images/MoveEnemies.png)
+![Enemy Moves](Images/MoveEnemies.png)
 
 ### Enemy Firing
 
@@ -156,7 +156,7 @@ This is then put into a new variable (enemyFiredLoc) to say the enemy at the pos
 
 Like player lazer the bomb moves down the grid by removing the class, moving the bomb and adding the class to the new cell. If the bomb reaches the bottom of the grid and doesn't hit the enemy it will be removed. If the bomb hits the player an audio sound will play, the player will lose a live (shown on screen) and the bomb will be removed.
 
-![Player Fires](images/EnemyBombFired.png)
+![Player Fires](Images/EnemyBombFired.png)
 
 ### Endgame Scenarios
 
@@ -183,7 +183,7 @@ To get the enemies to move down was a challenge as I had to make sure that any e
 
 To get any enemy to move down and change direction I used the filter function to say an enemy that has a position which is at either end of the grid cell to move down and change direction. A problem here was when I set the enemies to move the opposite way and move down, the enemies would then move down again as the moveDown varaibe was still at 1( as the enemies was still at the side). TO get it so the enemies wouldn’t move down again, I had to create new values called leftside and rightside. This meant at first the enemies would move down 1 cell, have the value changed to leftside/rightside and then either change direction to left or right and reset moveDown to 0 to stop it moving down.
 
-![EnemiesDown](images/enemiesDown)
+![EnemiesDown](Images/enemiesDown)
 
 When making the endGame function, I had problems with lazers and enemies carrying on moving after the game had finished. This was due to the setInterval carrying on once the message showing the player score was removed.
 To fix this I had to add clearInterrval functions to the bombs for when the lives were 0 or the ships were at the bottom of the page. To stop the enies from moving I used the removeEnemies function I made earlier and added it to the endGame function so there would be no enemies when the game ended.
