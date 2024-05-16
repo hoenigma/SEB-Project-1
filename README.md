@@ -188,12 +188,12 @@ To get any enemy to move down and change direction I used the filter function to
 When making the endGame function, I had problems with lazers and enemies carrying on moving after the game had finished. This was due to the setInterval carrying on once the message showing the player score was removed.
 To fix this I had to add clearInterrval functions to the bombs for when the lives were 0 or the ships were at the bottom of the page. To stop the enies from moving I used the removeEnemies function I made earlier and added it to the endGame function so there would be no enemies when the game ended.
 
-## Future Improvements:
+## Future Improvements
 
 - Create a level 2
 - Create a modal for endGame
 
-## Bugs:
+## Bugs
 
 If too many lasers are fired, they can get stuck on the screen.
 I would look to fix this by adding a restriction for how many lasers could be on the screen to help with the game running. In the playerFire function I could add a new variable called numberOfLasers and everytime one is fired the counter goes up by one. When the laser hits an enemy or reaches the enmd fo the screen the counter would go down by 1. Then an if statement would be added saying if numberOfLasers === 4, player can’t fire, Else, run the code for playerFire.
