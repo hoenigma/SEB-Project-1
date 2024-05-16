@@ -183,7 +183,7 @@ To get the enemies to move down was a challenge as I had to make sure that any e
 
 To get any enemy to move down and change direction I used the filter function to say an enemy that has a position which is at either end of the grid cell to move down and change direction. A problem here was when I set the enemies to move the opposite way and move down, the enemies would then move down again as the moveDown varaibe was still at 1( as the enemies was still at the side). TO get it so the enemies wouldn’t move down again, I had to create new values called leftside and rightside. This meant at first the enemies would move down 1 cell, have the value changed to leftside/rightside and then either change direction to left or right and reset moveDown to 0 to stop it moving down.
 
-![EnemiesDown](Images/enemiesDown)
+![EnemiesDown](Images/enemiesDown.png)
 
 When making the endGame function, I had problems with lazers and enemies carrying on moving after the game had finished. This was due to the setInterval carrying on once the message showing the player score was removed.
 To fix this I had to add clearInterrval functions to the bombs for when the lives were 0 or the ships were at the bottom of the page. To stop the enies from moving I used the removeEnemies function I made earlier and added it to the endGame function so there would be no enemies when the game ended.
